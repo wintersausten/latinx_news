@@ -1,0 +1,25 @@
+{
+  "name": "latinx_news",
+  "version": "1.0.0",
+  "description": "News site that aggregates news from Latin American countries. Contributors: Austen, Joe, Navid, Sailesh",
+  "main": "test.js",
+  "dependencies": {
+    "boilerpipe": "^0.0.7",
+    "cheerio": "^0.22.0",
+    "request": "^2.79.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wintersausten/latinx_news.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wintersausten/latinx_news/issues"
+  },
+  "homepage": "https://github.com/wintersausten/latinx_news#readme"
+}
