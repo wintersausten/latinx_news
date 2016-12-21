@@ -4,6 +4,7 @@
   "description": "News site that aggregates news from Latin American countries. Contributors: Austen, Joe, Navid, Sailesh",
   "main": "test.js",
   "dependencies": {
+    "article-extractor": "^1.0.2",
     "boilerpipe": "^0.0.7",
     "cheerio": "^0.22.0",
     "request": "^2.79.0"
