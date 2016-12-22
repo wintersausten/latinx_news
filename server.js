@@ -1,10 +1,11 @@
 // server.js
 
 // modules =================================================
-var express        = require('express');
-var app            = express();
-var bodyParser     = require('body-parser');
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+
 
 // configuration ===========================================
     
@@ -35,7 +36,11 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static(__dirname + '/public')); 
 
 // routes ==================================================
-require('./app/routes')(app); // configure our routes
+//var routes = require('./app/routes/routes')(app);
+//var extractor = require('./app/routes/extractor');
+
+app.use('/', require('./app/routes/routes')(app));
+//app.use('/news', extractor);
 
 // start app ===============================================
 // startup our app at http://localhost:8080
@@ -45,4 +50,4 @@ app.listen(port);
 console.log('Magic happens on port ' + port);
 
 // expose app           
-exports = module.exports = app; 
+module.exports = app; 
