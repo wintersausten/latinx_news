@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<title>LatinX</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link href='css/main.css' rel='stylesheet'>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<div id="header">
+			<a href="#">LatinXNews</a>
+		</div> 
+		<div class="navbar navbar-default">
+			<div id="main" class="pull-left">
+  				<span class="glyphicon glyphicon-flag" onclick="openNav()"></span>
+			</div>
+			<button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+                    <span class = "icon-bar"></span>
+                    <span class = "icon-bar"></span>
+                    <span class = "icon-bar"></span>
+            </button>
+  			<div id="category" class="collapse navbar-collapse navHeaderCollapse">
+			    <ul class="nav navbar-nav">
+			      <li><a href="#">NEWS</a></li>
+			      <li><a href="#">POLITICS</a></li>
+			      <li><a href="#">ECONOMY</a></li>
+			      <li><a href="#">TECHNOLOGY</a></li>
+			      <li><a href="#">SPORTS</a></li>
+			      <li><a href="#">ENTERTAINMENT</a></li>
+			    </ul>
+  			</div>
+		</div>
+
+		<div id="mySidenav" class="sidenav">
+  			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  			<a href="#" class="grow">Brazil</a>
+  			<a href="#" class="grow">Mexico</a>
+  			<a href="#" class="grow">Colombia</a>
+  			<a href="#" class="grow">Argentina</a>
+  			<a href="#" class="grow">Peru</a>
+  			<a href="#" class="grow">Venezuela</a>
+  			<a href="#" class="grow">Chile</a>
+  			<a href="#" class="grow">Ecuador</a>
+  			<a href="#" class="grow">Guatemala</a>
+  			<a href="#" class="grow">Cuba</a>
+  			<a href="#" class="grow">Haiti</a>
+  			<a href="#" class="grow">Bolivia</a>
+  			<a href="#" class="grow">Dominican Republic</a>
+  			<a href="#" class="grow">Honduras</a>
+  			<a href="#" class="grow">Paraguay</a>
+  			<a href="#" class="grow">Nicaragua</a>
+  			<a href="#" class="grow">El Savador</a>
+  			<a href="#" class="grow">Costa Rica</a>
+  			<a href="#" class="grow">Panama</a>
+  			<a href="#" class="grow">Puerto Rico</a>
+  			<a href="#" class="grow">Uruguay</a>
+  			<a href="#" class="grow">Puerto Rico</a>
+  			<a href="#" class="grow">Uruguay</a>
+		</div>
+		<div class="row info">
+    		<div class="col-md-8 col-xs-12" id="headline">
+      			<h4>HEADLINE</h4>
+    		</div>
+    		<div class="col-md-4  col-xs-12" id="trending">
+    			<h4>FOLLOW/TRENDING</h4>
+    		</div>
+    	</div>
+
+    	<div class="row">
+    		<div class="col-md-6 col-xs-12" id="news1">
+      			<h4>NEWS 1</h4>
+    		</div>
+    		<div class="col-md-6 col-xs-12" id="news2">
+      			<h4>NEWS 2</h4>
+    		</div>
+    	</div>
+
+    	<div class="row">
+    		<div class="col-md-4 col-xs-6" id="news3">
+      			<h4>NEWS 3</h4>
+    		</div>
+    		<div class="col-md-4 col-xs-6" id="news4">
+      			<h4>NEWS 4</h4>
+    		</div>
+    		<div class="col-md-4 col-xs-12" id="news5">
+      			<h4>NEWS 5</h4>
+    		</div>
+    	</div>
+
+		<script>
+			function openNav() {
+    			document.getElementById("mySidenav").style.width = "200px";
+			}
+
+
+			function closeNav() {
+    		document.getElementById("mySidenav").style.width = "0";
+			}
+		</script>
+	</body>
+</html>
