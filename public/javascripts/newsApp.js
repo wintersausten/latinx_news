@@ -20,11 +20,7 @@ newsApp.controller('mainController', function($scope){
 
 newsApp.controller('newsController', function($scope, $http){
   $http.get('/news/').success(function(data){
-    $scope.title = data.title;
-    $scope.publisher = data.publisher;
-    $scope.date = data.date;
-    $scope.image = data.image;
-    $scope.text = data.text;
+    $scope.data = data;
   })
 });
 
