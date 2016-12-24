@@ -1,6 +1,13 @@
 
-<h1>{{ data.title }}</h1>
+<!-- <h1>{{ data.title }}</h1>
 <h2>{{ data.publisher }} - {{ data.date }}</h2>
 <p>{{ data.canonicalLink }}</p>
 <img ng-src="{{ data.image }}" height="400px" width="600px"></img>
-<p>{{ data.text }}</p> 
+<p>{{ data.text }}</p> -->
+
+<div ng-repeat="news in data">
+  <h1>{{ news.title }}</h1>
+  <h2>{{ news.publisher }} - {{ news.date }}</h2>
+  <p>{{ news.canonicalLink }}</p>
+  <p>{{ news.description }}</p>
+</div>
