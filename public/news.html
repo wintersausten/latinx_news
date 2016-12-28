@@ -1,9 +1,9 @@
-
-<div ng-repeat="news in data">
+<div ng-controller="newsController" ng-repeat="news in data">
   <h1>{{ news.title }}</h1>
+  <a ng-href="#/news/{{accessors.getId(news)}}">view article</a>
   <h2>{{ news.publisher }} - {{ news.date }}</h2>
   <p>{{ news.canonicalLink }}</p>
-  <img ng-src="{{ news.image }}"></img>
+  <img ng-src="{{ news.image }}" style="height='400px' width='600px'"></img>
   <p>{{ news.description }}</p>
   <p>Country: {{ news.country }} Category: {{ news.category }}</p>
 </div>

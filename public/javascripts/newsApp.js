@@ -1,6 +1,14 @@
-var newsApp = angular.module('newsApp',['ngRoute']);
+var app = angular.module('newsApp',['ngRoute', 'ngResource']);
 
-newsApp.config(function($routeProvider){
+app.run(function($rootScope){
+  $rootScope.accessors = {
+    getId: function(row) {
+      return row._id;
+    }
+  }
+});
+
+app.config(function($routeProvider){
   $routeProvider
     // mainController
     .when('/',{
@@ -11,16 +19,28 @@ newsApp.config(function($routeProvider){
     .when('/news',{
       templateUrl: 'news.html',
       controller: 'newsController'
+    })
+    .when('/news/:id',{
+      templateUrl: 'article.html',
+      controller: 'articleController'
     });
 });
 
-newsApp.controller('mainController', function($scope){
+app.controller('mainController', function($scope){
   $scope.message = "News site that aggregates news from Latin American countries. Contributors: Austen, Joe, Navid, Sailesh";
 });
 
-newsApp.controller('newsController', function($scope, $http){
-  $http.get('/news/').success(function(data){
-    $scope.data = data;
-  })
+app.factory('newsService', function($resource){
+  return $resource('/news/:id');
 });
+
+app.controller('newsController', function($scope, $http){
+  $http.get('/news').success(function(data){
+    $scope.data = data;
+  });
+});
+
+app.controller('articleController', function($scope, $routeParams, newsService){
+  $scope.article = newsService.get({id: $routeParams.id});
+})
 
