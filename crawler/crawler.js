@@ -4,8 +4,6 @@ var extractor = require('unfluff');
 var url_parse = require('url-parse');
 var cheerio = require('cheerio');
 
-
-
 var INIT_URL = ["http://www.bbc.com/news/world/latin_america"];
 var pageVisited = {};
 var pagesToVisit = [];
