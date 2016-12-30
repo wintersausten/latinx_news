@@ -93,9 +93,11 @@ function parseArticles(relativeLinks,source) {
               article.author = data.author;
               article.publisher = data.publisher;
               article.text = data.text;
-              article.links = data.links; // an array of links
+              article.links = data.links.map(function(a){
+                  return a.href;
+              });
               article.image = data.image;
-              article.videos = data.videos;
+
               article.source = link.href
               if (article.links.length > 0){
                 // render the embedded links in the article
