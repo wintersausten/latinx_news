@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var articleSchema = new Schema({
     title: String,
+    categories: [String],
     date: Date,
     author: [String],
     publisher: String,
@@ -16,5 +17,3 @@ var articleSchema = new Schema({
 });
 
 var Articles = mongoose.model('Article', articleSchema);
-
-module.exports = Articles;
