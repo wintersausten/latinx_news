@@ -4,68 +4,90 @@ var extractor = require('unfluff');
 var url_parse = require('url-parse');
 var cheerio = require('cheerio');
 var FeedParser = require('feedparser')
+var mongoose = require('mongoose');
+var assert = require('assert');
 
-
-var pageVisited = {};
-var pagesToVisit = [];
-var relativeLinks = {};
-var articles = [];
-
+var Article = require("schema");
 
 var feeds = [];
 
 fetch("http://feeds.bbci.co.uk/news/world/latin_america/rss.xml",parse);
 
-function getArticles(feeds){
+
+function uploadArticle(article){
+    var url = 'mongodb://localhost:27017/latinx_news';
+    mongoose.connect(url);
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function () {
+        console.log("Connected correctly to server");
+        var newArticle = Article(article);
+        newArticle.save(function (err) {
+            if (err) throw err;
+            console.log('Article created');
+        });
+    });
+}
+
+function article(title,categories, date, copyright, author, publisher, text, links, image,source){
+    this.title = title;
+    this.categories = categories;
+    this.date = date;
+    this.copyright = copyright;
+    this.author = author;
+    this.publisher = publisher;
+    this.text = text;
+    this.links = links.map(function(a){
+        return a.href;
+    });
+    this.image = image;
+
+    this.source = source;
 
 }
 
 function parse(posts){
+    var articles = [];
     for (p in posts){
         var feedItem = {};
         feedItem.title = posts[p].title;
-        feedItem.description = posts[p].description;
-        feedItem.summary = posts[p].summary;
         feedItem.link = posts[p].link;
-        feedItem.date = posts[p].date;
-        feedItem.pubdate = posts[p].pubdate;
-        feedItem.author = posts[p].author;
-        feedItem.guid = posts[p].guid;
         feedItem.categories = posts[p].categories;
-
         feeds.push(feedItem);
     }
-    feeds.forEach(function(item){
-        request(item.link, function(error, response, body) {
-          if (error){
-            return console.log('Error:', error);
-          }
-          if(response.statusCode !== 200){
-            console.log('Invalid Status Code Returned', response.statusCode);
-            return;
-          }
-          var article = {};
-          var data = extractor(body);
-
-          article.title = data.title;
-          article.date = data.date;
-          article.copyright = data.copyright;
-          article.author = data.author;
-          article.publisher = data.publisher;
-          article.text = data.text;
-          article.links = data.links.map(function(a){
-              return a.href;
-          }); // an array of links
-          article.image = data.image;
-          article.source = item.link;
-          if (article.links.length > 0){
-            // render the embedded links in the article
-          }
-          console.log(article);
-          articles.push(article);
-      })
-    });
+    feeds.forEach(function(item)
+    {
+        var body = '';
+        var req = request(item.link, {timeout: 10000, pool: false});
+        req.on('error', function(error){
+            console.log(item.link+" : "+err);
+        })
+        req.on('data', function(chunk){
+            body += chunk;
+        })
+        req.on('end', function() {
+            var data = extractor(body);
+            var Article = new article(data.title,item.categories, data.date, data.copyright,
+                data.author, data.publisher, data.text, data.links, data.image,item.link);
+            console.log(Article);
+        })
+    })
 }
+
+// to handle multiple RSS links synchronously
+
+var multiRequest = function (urls, callback) {
+    var results = {}, t = urls.length, c = 0,
+    handler = function (error, response, body) {
+        var url = response.request.uri.href;
+        results[url] = { error: error, response: response, body: body };
+        if (++c === urls.length) { callback(results); }
+    };
+    while (t--) { request(urls[t], handler); }
+};
+
+
+
 
 function fetch(feed,callback) {
     var posts = [];
