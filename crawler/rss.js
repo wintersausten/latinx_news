@@ -3,33 +3,64 @@ var request = require('request');
 var extractor = require('unfluff');
 var url_parse = require('url-parse');
 var cheerio = require('cheerio');
-var FeedParser = require('feedparser')
+var FeedParser = require('feedparser');
 var mongoose = require('mongoose');
-var assert = require('assert');
+// connect to mongodb
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost:27017/temp");
+var Schema = mongoose.Schema;
 
-var Article = require("schema");
+var articleSchema = new Schema({
+    title: String,
+    copyright: String,
+    categories: [String],
+    //date: Date,
+    author: [String],
+    publisher: String,
+    text: String,
+    links: [String],
+    image: String,
+    source: String
+
+}, {
+    timestamps: true
+});
+
+var Article = mongoose.model('Article', articleSchema);
 
 var feeds = [];
 
 fetch("http://feeds.bbci.co.uk/news/world/latin_america/rss.xml",parse);
 
-
 function uploadArticle(article){
-    var url = 'mongodb://localhost:27017/latinx_news';
-    mongoose.connect(url);
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function () {
-        console.log("Connected correctly to server");
-        var newArticle = Article(article);
-        newArticle.save(function (err) {
-            if (err) throw err;
-            console.log('Article created');
-        });
-    });
+  var newArticle = new Article(article, false);
+
+  //console.log(newArticle);
+
+  newArticle.save(function(err){
+    console.log('inside save function');
+    if(err) {
+      console.log(err);
+    }
+    else {
+      console.log('Article created');
+    }
+  });
+  /*var url = 'mongodb://localhost:27017/latinx_news';
+  mongoose.connect(url);
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function () {
+      console.log("Connected correctly to server");
+      var newArticle = Article(article);
+      newArticle.save(function (err) {
+          if (err) throw err;
+          console.log('Article created');
+      });
+  });*/
 }
 
-function article(title,categories, date, copyright, author, publisher, text, links, image,source){
+function article(title, categories, date, copyright, author, publisher, text, links, image,source){
     this.title = title;
     this.categories = categories;
     this.date = date;
@@ -43,7 +74,6 @@ function article(title,categories, date, copyright, author, publisher, text, lin
     this.image = image;
 
     this.source = source;
-
 }
 
 function parse(posts){
@@ -67,15 +97,14 @@ function parse(posts){
         })
         req.on('end', function() {
             var data = extractor(body);
-            var Article = new article(data.title,item.categories, data.date, data.copyright,
-                data.author, data.publisher, data.text, data.links, data.image,item.link);
-            console.log(Article);
+            var Article = new article(data.title, item.categories, data.date, data.copyright, data.author, data.publisher, data.text, data.links, data.image,item.link);
+            //console.log(Article)
+            uploadArticle(Article);
         })
     })
 }
 
 // to handle multiple RSS links synchronously
-
 var multiRequest = function (urls, callback) {
     var results = {}, t = urls.length, c = 0,
     handler = function (error, response, body) {
@@ -119,6 +148,7 @@ function fetch(feed,callback) {
     })
     feedparser.on('end', function(){
         callback(posts);
-        console.log("done");
     })
 }
+
+mongoose.connection.close();
