@@ -5,6 +5,7 @@ var url_parse = require('url-parse');
 var cheerio = require('cheerio');
 var FeedParser = require('feedparser');
 var mongoose = require('mongoose');
+<<<<<<< HEAD
 // connect to mongodb
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost:27017/temp");
@@ -27,12 +28,23 @@ var articleSchema = new Schema({
 });
 
 var Article = mongoose.model('Article', articleSchema);
+=======
+var assert = require('assert');
+
+var Article = require("./schema");
+>>>>>>> modified to use Promises
 
 var feeds = [];
+var articles = [];
 
-fetch("http://feeds.bbci.co.uk/news/world/latin_america/rss.xml",parse);
+var url = 'mongodb://localhost:27017/latinx_news';
+//mongoose.connect(url);
+
+
+fetch("https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&output=rss",parse);
 
 function uploadArticle(article){
+<<<<<<< HEAD
   var newArticle = new Article(article, false);
 
   //console.log(newArticle);
@@ -61,9 +73,23 @@ function uploadArticle(article){
 }
 
 function article(title, categories, date, copyright, author, publisher, text, links, image,source){
+=======
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function () {
+        console.log("Connected correctly to server");
+        var newArticle = Article(article);
+        newArticle.save(function (err) {
+            if (err) throw err;
+            console.log('Article created');
+        });
+    });
+}
+
+function _article(title, date, copyright, author, publisher, text, links, image){
+>>>>>>> modified to use Promises
     this.title = title;
-    this.categories = categories;
-    this.date = date;
+    this.date = new Date(date);
     this.copyright = copyright;
     this.author = author;
     this.publisher = publisher;
@@ -72,19 +98,19 @@ function article(title, categories, date, copyright, author, publisher, text, li
         return a.href;
     });
     this.image = image;
+<<<<<<< HEAD
 
     this.source = source;
+=======
+    return this;
+>>>>>>> modified to use Promises
 }
 
 function parse(posts){
-    var articles = [];
     for (p in posts){
-        var feedItem = {};
-        feedItem.title = posts[p].title;
-        feedItem.link = posts[p].link;
-        feedItem.categories = posts[p].categories;
-        feeds.push(feedItem);
+        feeds.push(posts[p].link);
     }
+<<<<<<< HEAD
     feeds.forEach(function(item)
     {
         var body = '';
@@ -102,20 +128,56 @@ function parse(posts){
             uploadArticle(Article);
         })
     })
+=======
+    const promises = feeds.map(url => fetchArticles(url));
+    Promise.all(promises).then(function(responses){
+        responses.forEach(function(response){
+            var data = extractor(response);
+            var Article = new _article(data.title, data.date, data.copyright,
+                data.author, data.publisher, data.text, data.links, data.image);
+            articles.push(Article);
+        });
+        console.log(articles);
+    });
+>>>>>>> modified to use Promises
 }
 
+
 // to handle multiple RSS links synchronously
+<<<<<<< HEAD
 var multiRequest = function (urls, callback) {
+=======
+
+function asyncRequest (urls, callback) {
+>>>>>>> modified to use Promises
     var results = {}, t = urls.length, c = 0,
     handler = function (error, response, body) {
         var url = response.request.uri.href;
         results[url] = { error: error, response: response, body: body };
         if (++c === urls.length) { callback(results); }
     };
-    while (t--) { request(urls[t], handler); }
+    while (t--) {
+        request(urls[t].link, handler);
+    }
 };
 
 
+
+function fetchArticles(url){
+    return new Promise(function(resolve, reject){
+        request(url, function(error, response, body){
+            if(error){
+                return reject(error);
+            }
+            else if(response.statusCode != 200) {
+                err = new Error("Unexpected status code: " + response.statusCode);
+                err.res = response;
+                return reject(err);
+            }
+            resolve(body);
+        });
+    });
+}
 
 
 function fetch(feed,callback) {
