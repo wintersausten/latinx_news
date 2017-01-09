@@ -16,4 +16,6 @@ var articleSchema = new Schema({
     timestamps: true
 });
 
-mongoose.model('Article', articleSchema);
+var Articles = mongoose.model('Article', articleSchema);
+
+module.exports = Articles;
