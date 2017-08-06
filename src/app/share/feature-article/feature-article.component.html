@@ -1,0 +1,5 @@
+<div class="information">
+  <h5 [routerLink]="['/', 'country', news.country, 'news', news.newsID]">{{ news.title }}</h5>
+  <p>{{ news.text | summarize }}</p>
+  <small>{{news.publisher}} | {{news.author | authors }}</small>
+</div>

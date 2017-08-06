@@ -1,0 +1,27 @@
+<div class="container">
+  <br>
+  <h2>{{ countryDisplay }}</h2>
+  <hr>
+  <br>
+  <div *ngIf="isNews; then showNews else noNews">
+    
+  </div>
+  <ng-template #showNews>
+    <div class="row">
+      <div class="col-lg-8">
+        <app-main-news [index]=0 [country]=country></app-main-news>
+      </div>
+      <div class="col-lg-4">
+        <app-side-news [start]=1 [end]=5 [country]=country></app-side-news>
+      </div>
+    </div>
+    <hr>
+    <app-list-news [start]=5 [country]=country></app-list-news>
+  </ng-template>
+  <ng-template #noNews>
+    <div class="container">
+      <h2>Check back later for news on {{ countryDisplay }}</h2>
+    </div>
+  </ng-template>
+</div>
+  

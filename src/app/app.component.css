@@ -1,0 +1,40 @@
+h1 {
+  text-align: center;
+  color: #f53240;
+}
+
+h2 {
+  color: #f53240;
+}
+
+.navbar-brand {
+  text-align: center;
+  margin-left: 33%;
+}
+
+.container-fluid {
+  background-color: white;
+}
+
+.country-link hr {
+  color: #7cd;
+}
+
+#borderimg {
+  height: 10px;
+  background-color: #f9be02;
+}
+
+@media screen and (max-width: 540px) {
+    .navbar-brand {
+    text-align: center;
+    margin-left: 12%;
+  }
+}
+
+@media screen and (min-width: 541px) and (max-width: 740px) {
+    .navbar-brand {
+    text-align: center;
+    margin-left: 25%;
+  }
+}

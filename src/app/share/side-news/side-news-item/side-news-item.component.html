@@ -1,0 +1,13 @@
+<div class="listing" [routerLink]="['/', 'country', news.country, 'news', news.newsID]">
+  <div>
+    <div class="pull-right">
+    <img src="{{news.image}}" alt="" style="height: 59px; width: 65px;">
+    </div>
+    <p>
+      <strong>{{ news.title }}</strong> 
+    </p>
+    
+    <small>{{news.publisher}} | {{news.author | authors }}</small>
+  </div>
+</div>
+<hr>

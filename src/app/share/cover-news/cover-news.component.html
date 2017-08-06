@@ -1,0 +1,9 @@
+<div class="jumbotron jumbotron-fluid"
+  [routerLink]="['/', 'country', news.country, 'news', news.newsID]"
+  [ngStyle]="{ 'background-image': 'url(' + news.image + ')'}">
+  <div class="container information">
+    <p class="mb-1">From <a [routerLink]="['/', 'country', news.country]">{{news.country}}</a></p> 
+    <h2 class="mb-1">{{news.title}}</h2> 
+    <small>{{news.publisher}} | {{news.author | authors }}</small>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+img {
+  width: 650px;
+  height: 355px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+h4 {
+  cursor: pointer;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+p {
+  font-size: 14px;
+}
+
+small {
+  color: #777777;
+}
+
+.information {
+  margin-bottom: 15px;
+}

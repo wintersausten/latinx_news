@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <app-cover-news></app-cover-news>
+    </div>
+  </div>
+  <br>
+  <hr>
+  <div class="row">
+    <div class="col-lg-8">
+      <app-main-news [index]=1></app-main-news>
+    </div>
+    <div class="col-lg-4">
+      <app-side-news [start]=2 [end]=6></app-side-news>
+    </div>
+  </div>
+  <hr>
+  <h3>Feature Articles From ASUCD</h3>
+  <br>
+  <div class="row">
+    <div class="col-lg-4">
+      <app-feature-article [index]=6></app-feature-article>
+    </div>
+    <div class="col-lg-4">
+      <app-feature-article [index]=7></app-feature-article>
+    </div>
+    <div class="col-lg-4">
+      <app-feature-article [index]=8></app-feature-article>      
+    </div>
+  </div>
+  <br>
+  <hr>
+  <app-list-news [start]=9></app-list-news>
+</div>
+  

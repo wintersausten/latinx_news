@@ -1,0 +1,19 @@
+p {
+  margin-bottom:  0;
+  font-size: 13px;
+}
+
+.listing {
+  margin-bottom: 1rem;
+  cursor: pointer;
+  outline: none;
+}
+
+hr {
+  padding-bottom:  4px;
+  border-color: #f9be02;
+}
+
+img {
+  padding-bottom: 15px;
+}

@@ -1,0 +1,10 @@
+h3 {
+  text-align: center;
+  color: #f53240
+}
+
+hr {
+  height: 10px;
+  box-shadow: 0 10px 10px -10px #8c8b8b; 
+  border-color: #f9be02;
+}

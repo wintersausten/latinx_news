@@ -1,0 +1,30 @@
+
+
+  <ng-sidebar-container style="height: 100vh">
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="_opened" [mode]="'push'">
+        <div class="country-link" *ngFor="let country of countries">
+          <a [routerLink]="['country', country]" style="padding-top: 10px;">{{ country | uppercase }}</a>
+          <hr>
+        </div>
+    </ng-sidebar>
+
+    <!-- Page content -->
+    <div ng-sidebar-content id="body">
+      <div id="heading" class="navbar-fixed">
+        <div class="container-fluid">
+          <h2 style="display: inline"><i (click)="_toggleSidebar()" class="fa fa-bars" aria-hidden="true"></i></h2>
+          <span class="title"><a class="navbar-brand" [routerLink]="['/']"><h1><strong>LatinXNews</strong></h1></a></span>
+        </div>
+      </div>
+      <div id="borderimg">
+        
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </ng-sidebar-container>  
+
+<!-- <div class="navbar navbar-light bg-faded">
+        <h2 style="display: inline-block;"><i (click)="_toggleSidebar()" class="fa fa-bars" aria-hidden="true"></i></h2>
+        <a class="navbar-brand mr-auto" href="#" style="display: inline;">Navbar</a>
+      </div> -->

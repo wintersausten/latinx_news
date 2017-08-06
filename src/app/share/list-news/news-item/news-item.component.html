@@ -1,0 +1,17 @@
+<div class="list-group-item">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1"
+      [routerLink]="['/', 'country', news.country, 'news', news.newsID]">
+      {{news.title}}</h5>
+      <small>{{news.date | date}}</small>
+    </div>
+    <div class="d-flex w-100 justify-content-between">
+      <p class="mb-1">From <u><a [routerLink]="['/', 'country', country]">{{news.country}}</a></u></p>
+    </div>
+    <div class="d-flex w-100 justify-content-between">
+      <p class="mb-1">{{news.text | summarize}}</p>
+    </div>
+    <div class="d-flex w-100 justify-content-between">
+      <small>{{news.publisher}} | {{news.author | authors }}</small>
+    </div>
+</div>

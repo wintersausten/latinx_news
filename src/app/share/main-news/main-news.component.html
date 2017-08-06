@@ -1,0 +1,11 @@
+
+<img src="{{news.image}}"
+class="img-fluid"
+ alt="placeholder+image"
+ [routerLink]="['/', 'country', country, 'news', id]"
+ >
+ <div class="information mx-auto d-block">
+    <p class="mb-1">From <u><a [routerLink]="['/', 'country', news.country]">{{news.country}}</a></u></p> 
+    <h4 class="mb-1" [routerLink]="['/', 'country', news.country, 'news', news.newsID]">{{news.title}}</h4> 
+    <small>{{news.publisher}} | {{news.author | authors }}</small>
+ </div>

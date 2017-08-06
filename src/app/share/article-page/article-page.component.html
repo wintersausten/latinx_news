@@ -1,0 +1,28 @@
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+       <h2>{{ news.title }}</h2>
+       <small><i class="fa fa-users" aria-hidden="true"></i>{{ news.author | authors }}</small>
+       <small><i class="fa fa-calendar" aria-hidden="true"></i>{{ news.date | date }}</small>
+       <p>This article is authored by {{ news.author | authors }} from {{ news.publisher }}</p>
+       <img src="{{ news.image }}">
+       <hr>
+       <p>{{ news.text }}</p>
+       <br>
+    </div>
+    <div class="col-lg-3">
+      <div class="list-group-item">
+        <app-feature-article [index]=6></app-feature-article>
+      </div>
+      <br>
+      <div class="list-group-item">
+        <app-feature-article [index]=7></app-feature-article>
+      </div>
+      <br>
+      <div class="list-group-item">
+        <app-feature-article [index]=8></app-feature-article>
+      </div>
+    </div>
+  </div> 
+</div>
