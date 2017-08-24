@@ -46,14 +46,25 @@ router.get('/', (req, res) => {
           error: err
         });
       }
-      
-      res.status(200).json({
-        message: 'Success',
-        obj: news
-      });
-    });
+      News.find({publisher: "ASUCD"}, function(err, foundASUCD){
+        if(err) {
+          return res.status(500).json({
+            title: 'An error occureed',
+            error: err
+          });
+        }
 
-  
+        res.status(200).json({
+          message: 'Success',
+          obj: news,
+          obj2: foundASUCD
+        });
+      })
+      // res.status(200).json({
+      //   message: 'Success',
+      //   obj: news
+      // });
+    });
 });
 
 module.exports = router;

@@ -15,9 +15,10 @@ export class FeatureArticleComponent implements OnInit {
   constructor(private newsService: NewsService) { }
 
   ngOnInit() {
-     this.newsService.getNewsIndex(this.index)
+     this.newsService.getASUCDNews(this.index)
       .subscribe(
         (news: News) => {
+          console.log(news);
           this.news = news;
         }
       );

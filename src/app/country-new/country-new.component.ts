@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import { CountryService } from '../country.service' ;
@@ -13,7 +13,6 @@ import { News } from '../share/news.model';
 })
 export class CountryNewComponent implements OnInit, OnDestroy {
   country: string;
-  countryDisplay: string;
   news: News[];
   isNews: boolean = false;
 
@@ -28,8 +27,6 @@ export class CountryNewComponent implements OnInit, OnDestroy {
         (params: Params) => {
           this.country = params['countryName'];
           console.log(this.country);
-          this.countryDisplay = this.country;
-          this.countryDisplay = this.countryDisplay.toUpperCase();
           this.country = this.country.toLowerCase();
           if(!this.countryService.checkCountry(this.country))
           {
@@ -42,6 +39,7 @@ export class CountryNewComponent implements OnInit, OnDestroy {
       .subscribe(
         (news: News[]) => {
           this.news = news;
+          console.log(this.news);
 
           if(news.length > 0)
             this.isNews = true;

@@ -188,17 +188,17 @@ var news = [
       author: ["John Doe", "Jane Doe"],
       publisher: "ASUCD",
       text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-      image: "http://www.telegraph.co.uk/content/dam/news/2017/01/23/chile-fire-large_trans_NvBQzQNjv4BqqVzuuqpFlyLIwiB6NTmJwfSVWeZ_vEN7c6bHu2jJnT8.jpg",
+      image: "http://www.telegraph.co.uk/content/dam/news/2017/05/25/TELEMMGLPICT000129923394-large_trans_NvBQzQNjv4Bqek9vKm18v_rkIPH9w2GMNoGXySPv9M1Jbe0Fc3Bi1Fk.jpeg",
       country: "uruguay"
     },
 
     {
-      title: "ASUCD Artcile 2",
+      title: "ASUCD Article 2",
       date: new Date("July 29, 2017 10:13:00"),
       author: ["John Doe", "Jane Doe"],
       publisher: "ASUCD",
       text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-      image: "http://www.telegraph.co.uk/content/dam/news/2017/01/23/chile-fire-large_trans_NvBQzQNjv4BqqVzuuqpFlyLIwiB6NTmJwfSVWeZ_vEN7c6bHu2jJnT8.jpg",
+      image: "http://www.telegraph.co.uk/content/dam/news/2017/05/25/TELEMMGLPICT000129923394-large_trans_NvBQzQNjv4Bqek9vKm18v_rkIPH9w2GMNoGXySPv9M1Jbe0Fc3Bi1Fk.jpeg",
       country: "venezuela"
     },
 
@@ -208,7 +208,7 @@ var news = [
       author: ["John Doe", "Jane Doe"],
       publisher: "ASUCD",
       text: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
-      image: "http://www.telegraph.co.uk/content/dam/news/2017/01/23/chile-fire-large_trans_NvBQzQNjv4BqqVzuuqpFlyLIwiB6NTmJwfSVWeZ_vEN7c6bHu2jJnT8.jpg",
+      image: "http://www.telegraph.co.uk/content/dam/news/2017/05/25/TELEMMGLPICT000129923394-large_trans_NvBQzQNjv4Bqek9vKm18v_rkIPH9w2GMNoGXySPv9M1Jbe0Fc3Bi1Fk.jpeg",
       country: "argentina"
     },
   ];

@@ -1,6 +1,6 @@
 <div class="container">
   <br>
-  <h2>{{ countryDisplay }}</h2>
+  <h2>{{ country | uppercase }}</h2>
   <hr>
   <br>
   <div *ngIf="isNews; then showNews else noNews">

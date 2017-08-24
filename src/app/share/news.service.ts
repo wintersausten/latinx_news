@@ -237,8 +237,6 @@ export class NewsService {
   }
 
   getNewsById(id: string, country: string){
-    console.log("BY ID");
-    console.log('http://localhost:3000/api/country/' + country + '/news/' + id);
     return this.http.get('http://localhost:3000/api/country/' + country + '/news/' + id)
       .map((response: Response) => {
         const news = response.json().obj;
@@ -249,6 +247,24 @@ export class NewsService {
       })
       .catch((error: Response) => Observable.throw(error.json()));
     // return this.news.slice()[(+id) - 1];
+  }
+
+  getASUCDNews(id: number){
+    return this.http.get('http://localhost:3000/api')
+      .map((response: Response) => {
+        //console.log(response.json());
+        const news = response.json().obj2;
+        let transformedNews: News[] = [];
+        for (let newsArticle of news) {
+          transformedNews.push(new News(newsArticle._id, newsArticle.title, newsArticle.date, newsArticle.author, newsArticle.publisher, newsArticle.text, newsArticle.image, newsArticle.country));
+        }
+        this.news = transformedNews;
+        //return this.news;
+        console.log(transformedNews.slice()[id]);
+        return transformedNews.slice()[id];
+        //return transformedNews.slice();
+      })
+      .catch((error: Response) => Observable.throw(error.json()));
   }
 
 }
