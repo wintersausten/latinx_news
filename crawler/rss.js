@@ -8,11 +8,12 @@ require('./schema');
 var mongoose = require('mongoose');
 mongoose.set('debug', true);
 var assert = require('assert');
-
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const fs = require('fs');
 var feeds = [];
 var articles = [];
 
-fetch("http://feeds.bbci.co.uk/news/world/latin_america/rss.xml",parse);
+fetch("http://www.buenosairesherald.com/articles/rss.aspx",parse);
 
 function uploadArticle(articles){
   mongoose.connect('mongodb://localhost:27017/test_db');
@@ -48,6 +49,7 @@ function _article(title, date, copyright, author, publisher, text, links, image)
 
 function parse(posts){
     for (p in posts){
+        //console.log(posts[p].link)
         feeds.push(posts[p].link);
     }
     const promises = feeds.map(url => fetchArticles(url));
@@ -60,6 +62,8 @@ function parse(posts){
         });
         //console.log(articles);
         uploadArticle(articles);
+    }, function(err){
+        console.log(err)
     });
 }
 
@@ -78,8 +82,6 @@ function asyncRequest (urls, callback) {
     }
 };
 
-
-
 function fetchArticles(url){
     return new Promise(function(resolve, reject){
         var body = '';
@@ -92,7 +94,7 @@ function fetchArticles(url){
             var body = '';
             if (res.statusCode != 200){
                 err = new Error("Unexpected status code: " + res.statusCode);
-                err.res = response;
+                err.res = res;
                 return reject(err);
             }
             res.on('data', function(chunk){
@@ -105,6 +107,25 @@ function fetchArticles(url){
     });
 }
 
+
+function xmlFetch(feed, callback){
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET',feed, true);    
+    // If specified, responseType must be empty string or "document"
+    xhr.responseType = 'document';
+    // overrideMimeType() can be used to force the response to be parsed as XML
+    xhr.responseType = 'document';
+    var feedparser = new FeedParser();
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === 4) { // done
+            if(xhr.status === 200) { // complete	
+                console.log(xhr.responseText)
+            }
+        }
+    };
+    xhr.send(null);
+
+}
 
 function fetch(feed,callback) {
     var posts = [];
@@ -121,6 +142,7 @@ function fetch(feed,callback) {
     });
     req.on('response', function(res) {
         if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
+        //onsole.log(res)
         res.pipe(feedparser);
     });
 
@@ -136,6 +158,7 @@ function fetch(feed,callback) {
     })
     feedparser.on('end', function(){
         callback(posts);
+        //console.log(posts);
         console.log("done");
     })
 }

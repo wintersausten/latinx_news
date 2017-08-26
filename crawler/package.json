@@ -19,6 +19,7 @@
     "request": "^2.79.0",
     "serve-favicon": "~2.3.0",
     "unfluff": "^1.1.0",
-    "url-parse": "^1.1.7"
+    "url-parse": "^1.1.7",
+    "xmlhttprequest": "^1.8.0"
   }
 }
