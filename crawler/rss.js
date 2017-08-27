@@ -12,8 +12,10 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const fs = require('fs');
 var feeds = [];
 var articles = [];
+var Promise = require("bluebird");
 
 fetch("http://www.buenosairesherald.com/articles/rss.aspx",parse);
+//fetch('http://feeds.bbci.co.uk/news/rss.xml', parse);
 
 function uploadArticle(articles){
   mongoose.connect('mongodb://localhost:27017/test_db');
@@ -53,18 +55,40 @@ function parse(posts){
         feeds.push(posts[p].link);
     }
     const promises = feeds.map(url => fetchArticles(url));
-    Promise.all(promises).then(function(responses){
+
+    Promise.all(promises.map(function(promise){
+        return promise.reflect();
+    })).filter(function(promise){
+        return promise.isFulfilled();
+    }).then(function(responses){
         responses.forEach(function(response){
-            var data = extractor(response);
-            var Article = new _article(data.title, data.date, data.copyright,
+            if(response.isFulfilled()){
+                var data = extractor(response.value());
+                var Article = new _article(data.title, data.date, data.copyright,
                 data.author, data.publisher, data.text, data.links, data.image);
-            articles.push(Article);
-        });
-        //console.log(articles);
+                articles.push(Article);
+            }
+            else { 
+                console.log("not fullfilled")
+            }
+        })
         uploadArticle(articles);
-    }, function(err){
-        console.log(err)
-    });
+        console.log(articles);
+    })
+    //Promise.all(promises).then(function(responses){
+    //     responses.forEach(function(response){
+    //         console.log(responses)
+    //         var data = extractor(response);
+    //         var Article = new _article(data.title, data.date, data.copyright,
+    //             data.author, data.publisher, data.text, data.links, data.image);
+    //         articles.push(Article);
+    //     });
+    //     //console.log(articles);
+    //     //uploadArticle(articles);
+    // })
+    // .catch(function(err){
+    //     console.log(err);
+    // })
 }
 
 
