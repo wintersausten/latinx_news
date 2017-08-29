@@ -31,11 +31,11 @@ export class CountryService {
 
   constructor() { }
 
-  getCountries() {
+  public getCountries() {
     return this.countries;
   }
 
-  checkCountry(country: string) {
+  public checkCountry(country: string) {
     this.foundParam = this.countries.includes(country);
     return this.foundParam;
   }

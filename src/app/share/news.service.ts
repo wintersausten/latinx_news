@@ -146,7 +146,7 @@ export class NewsService {
   // ];
 
 
-  getNews(country: string){
+  public getNews(country: string){
     return this.http.get('http://localhost:3000/api/country/' + country)
       .map((response: Response) => {
         //console.log(response.json());
@@ -162,7 +162,7 @@ export class NewsService {
       .catch((error: Response) => Observable.throw(error.json()));
   }
 
-  getNewsIndex(index: number, country?: string){
+  public getNewsIndex(index: number, country?: string){
     //console.log(this.http.get('http://localhost:3000/api'));
 
     if(country){
@@ -196,7 +196,7 @@ export class NewsService {
     //return this.news.slice()[index];
   }
 
-  getMultipleNews(start: number, end?: number, country?: string){
+  public getMultipleNews(start: number, end?: number, country?: string){
     if(country){
       return this.http.get('http://localhost:3000/api/country/' + country)
       .map((response: Response) => {
@@ -236,7 +236,7 @@ export class NewsService {
     // return this.news.slice(start); 
   }
 
-  getNewsById(id: string, country: string){
+  public getNewsById(id: string, country: string){
     return this.http.get('http://localhost:3000/api/country/' + country + '/news/' + id)
       .map((response: Response) => {
         const news = response.json().obj;
@@ -249,7 +249,7 @@ export class NewsService {
     // return this.news.slice()[(+id) - 1];
   }
 
-  getASUCDNews(id: number){
+  public getASUCDNews(id: number){
     return this.http.get('http://localhost:3000/api')
       .map((response: Response) => {
         //console.log(response.json());
