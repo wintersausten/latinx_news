@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from "rxjs/Observable";
 
@@ -159,7 +159,7 @@ export class NewsService {
         return this.news;
         //return transformedNews.slice();
       })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: any) => Observable.throw(error.json()));
   }
 
   public getNewsIndex(index: number, country?: string){
@@ -177,7 +177,7 @@ export class NewsService {
         this.news = transformedNews;
         return transformedNews.slice()[index];
       })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: any) => Observable.throw(error.json()));
     }
 
     return this.http.get('http://localhost:3000/api')
@@ -191,7 +191,7 @@ export class NewsService {
         this.news = transformedNews;
         return transformedNews.slice()[index];
       })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: any) => Observable.throw(error.json()));
     // console.log("Here");
     //return this.news.slice()[index];
   }
@@ -212,7 +212,7 @@ export class NewsService {
 
         return transformedNews.slice(start);
       })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: any) => Observable.throw(error.json()));
     }
 
     return this.http.get('http://localhost:3000/api')
@@ -229,7 +229,7 @@ export class NewsService {
 
         return transformedNews.slice(start);
       })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: any) => Observable.throw(error.json()));
     // if(end)
     //   return this.news.slice(start, end);
 
@@ -245,7 +245,7 @@ export class NewsService {
         this.news.push(transformedNews); // = transformedNews;
         return transformedNews;
       })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: any) => Observable.throw(error.json()));
     // return this.news.slice()[(+id) - 1];
   }
 
@@ -264,7 +264,19 @@ export class NewsService {
         return transformedNews.slice()[id];
         //return transformedNews.slice();
       })
-      .catch((error: Response) => Observable.throw(error.json()));
+      .catch((error: any) => Observable.throw(error.json()));
+  }
+
+  public addNews(news: News) {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post('http://localhost:3000/api', news, options)
+      .map((response: Response) => { 
+        const news = response.json().obj;
+        console.log(news);
+        return news;
+      })
+      .catch((error: any) => Observable.throw(error.json()));
   }
 
 }

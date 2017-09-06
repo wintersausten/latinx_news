@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { SidebarModule } from 'ng-sidebar';
 import { AppRouteModule } from './app-routing.module';
@@ -22,6 +23,7 @@ import { SideNewsItemComponent } from './share/side-news/side-news-item/side-new
 import { CoverNewsComponent } from './share/cover-news/cover-news.component';
 import { FeatureArticleComponent } from './share/feature-article/feature-article.component';
 import { ArticlePageComponent } from './share/article-page/article-page.component';
+import { AddArticleComponent } from './add-article/add-article.component';
 
 @NgModule({
   declarations: [
@@ -38,10 +40,12 @@ import { ArticlePageComponent } from './share/article-page/article-page.componen
     SideNewsItemComponent,
     CoverNewsComponent,
     FeatureArticleComponent,
-    ArticlePageComponent
+    ArticlePageComponent,
+    AddArticleComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     SidebarModule.forRoot(),
     AppRouteModule,
     HttpModule,

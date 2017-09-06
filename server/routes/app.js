@@ -1,19 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var News = require('../models/news');
-var Article = require('../models/article');
-
-// route to form for featured articles
-router.get('/add_articles', (req, res) => {
-  res.sendFile('../dist/article.html');
-});
 
 // route to post featured article to database
-router.post('/add_articles', (req, res) => {
-  Article.create({
+router.post('/', (req, res) => {
+  News.create({
     title: req.body.title,
     author: req.body.author,
-    content: req.body.content,
+    text: req.body.text,
     country: req.body.country
   }, function(err, addedArticle) {
     if (err) {
@@ -29,6 +23,7 @@ router.post('/add_articles', (req, res) => {
   })
 })
 
+// route to get specific article from country news page
 router.get('/country/:countryName/news/:id', (req, res) => {
   console.log(req.params.countryName);
   // console.log(typeof req.param.countryName);
@@ -46,6 +41,7 @@ router.get('/country/:countryName/news/:id', (req, res) => {
   })
 });
 
+// route to get news from specifc country
 router.get('/country/:countryName', (req, res) => {
   console.log(req.params.countryName);
   // console.log(typeof req.param.countryName);
@@ -64,6 +60,7 @@ router.get('/country/:countryName', (req, res) => {
   });
 });
 
+// root route
 router.get('/', (req, res) => {
   News.find().sort('-date')
     .exec(function(err, news) {

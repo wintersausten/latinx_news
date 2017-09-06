@@ -21,7 +21,6 @@ mongoose.connect('mongodb://localhost/latinx_news');
 
 seedDB();
 
-
 app.use('/api', appRoute);
 
 // Catch all other routes and return the index file
