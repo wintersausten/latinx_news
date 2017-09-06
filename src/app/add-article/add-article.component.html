@@ -1,0 +1,27 @@
+<form method="POST">
+
+	<div class="form-group"> <!-- Title -->
+		<label for="title" class="control-label">Title</label>
+		<input type="text" class="form-control" placeholder="Title" name ="title" [(ngModel)]="news.title">
+	</div>	
+
+	<div class="form-group"> <!-- Author -->
+		<label for="author" class="control-label">Author</label>
+		<input type="text" class="form-control" placeholder="Author" name="author" [(ngModel)]="news.author">
+	</div>													
+							
+	<div class="form-group"> <!-- Country List -->
+		<label for="country" class="control-label">Country</label>
+		<select class="form-control" name="country" [(ngModel)]="news.country">
+			<option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+		</select>
+	</div>
+
+	<div>
+		<label></label>
+		<textarea class="form-control" placeholder="Enter the contents of the article." rows="7" name="text" [(ngModel)]="news.text"></textarea>
+	</div>
+
+	<button type="submit" (click)="onSubmit()">Submit</button>
+
+</form>
