@@ -8,7 +8,8 @@ router.post('/', (req, res) => {
     title: req.body.title,
     author: req.body.author,
     text: req.body.text,
-    country: req.body.country
+    country: req.body.country,
+    publisher: req.body.publisher
   }, function(err, addedArticle) {
     if (err) {
       res.status(500).json({

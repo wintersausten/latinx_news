@@ -19,7 +19,7 @@ export class AddArticleComponent implements OnInit {
   	private newsService: NewsService ) { }
 
   public onSubmit() {
-  	let transformedNews = new News('', this.news.title, this.news.date, this.news.author, 'ASUCD', this.news.text, this.news.image, this.news.country);
+  	let transformedNews = new News('', this.news.title, this.news.date, this.news.author, "ASUCD", this.news.text, this.news.image, this.news.country);
   	this.newsService.addNews(transformedNews).subscribe(
   		(res: Response) => {
   			console.log("added article");

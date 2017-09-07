@@ -12,7 +12,7 @@
 							
 	<div class="form-group"> <!-- Country List -->
 		<label for="country" class="control-label">Country</label>
-		<select class="form-control" name="country" [(ngModel)]="news.country">
+		<select class="form-control" placeholder="Select country" name="country" [(ngModel)]="news.country">
 			<option *ngFor="let country of countries" [value]="country">{{ country }}</option>
 		</select>
 	</div>
