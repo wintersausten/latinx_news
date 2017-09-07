@@ -14,7 +14,7 @@ var feeds = [];
 var articles = [];
 var Promise = require("bluebird");
 
-fetch("http://www.buenosairesherald.com/articles/rss.aspx",parse);
+fetch("http://estaticos.elmundo.es/elmundo/rss/portada.xml",parse);
 //fetch('http://feeds.bbci.co.uk/news/rss.xml', parse);
 
 function uploadArticle(articles){
@@ -72,7 +72,7 @@ function parse(posts){
                 console.log("not fullfilled")
             }
         })
-        uploadArticle(articles);
+        //uploadArticle(articles);
         console.log(articles);
     })
     //Promise.all(promises).then(function(responses){
