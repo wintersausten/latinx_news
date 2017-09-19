@@ -3,19 +3,16 @@ var request = require('request');
 var extractor = require('unfluff');
 var url_parse = require('url-parse');
 var cheerio = require('cheerio');
-
-var INIT_URL = ["http://www.bbc.com/news/world/latin_america"];
 var pageVisited = {};
 var pagesToVisit = [];
 var relativeLinks = {};
+var Promise = require("bluebird");
 //var articles = new Array;
-//var url = new url_parse(INIT_URL[0]);
-//var baseUrl = url.protocol + "//" + url.hostname;
-//pagesToVisit.push(INIT_URL[0]);
+
 
 //crawl();
 var array = new Array;
-function article(title, date, copyright, author, publisher, text, links, image,source){
+function article(title, date, copyright, author, publisher, text, links, image){
     this.title = title;
     this.date = date;
     this.copyright = copyright;
@@ -26,36 +23,28 @@ function article(title, date, copyright, author, publisher, text, links, image,s
         return a.href;
     });
     this.image = image;
-
-    this.source = source;
 }
 
-start();
-
-
-function start() { // start of crawling
+function start(INIT_URL) { // start of crawling
   var sources = {};
-  for(var urlIndex in INIT_URL){
-    var url = new url_parse(INIT_URL[urlIndex]);
-    var baseUrl = url.protocol + "//" + url.hostname;
-    var pathname = url.pathname;
-    sources.baseUrl = baseUrl;
-    sources.href = INIT_URL[urlIndex];
-    sources.pathname = pathname;
-    pagesToVisit.push(sources);
-  }
-
+  var url = new url_parse(INIT_URL);
+  var baseUrl = url.protocol + "//" + url.hostname;
+  var pathname = url.pathname;
+  sources.baseUrl = baseUrl;
+  sources.href = INIT_URL;
+  sources.pathname = pathname;
+  pagesToVisit.push(sources);
   crawl();
 }
 
 function crawl() {
-  var nextSource = pagesToVisit.pop();
-  if(nextSource in pageVisited){
-    crawl();
-  }
-  else {
-    visitPage(nextSource,crawl);
-  }
+    var nextSource = pagesToVisit.pop();
+    if(nextSource in pageVisited){
+        crawl();
+    }
+    else {
+        visitPage(nextSource,crawl);
+    }
 }
 
 function visitPage(source, callback){
@@ -69,47 +58,74 @@ function visitPage(source, callback){
       callback();
       return;
     }
+    //console.log(body)
     var $ = cheerio.load(body);
-    collectLinks($,source);
-
+    relLinks = collectLinks($,source);
+    var articles = parseArticles(relLinks,source)
   });
 }
 
 function collectLinks($,source) {
-  var relLinks = [];
-  var links = $("a[href^='/']");
-  links.each(function(){
-    if ($(this).attr('href').match(/-\d+$/) != null) {
-      relLinks.push(source.baseUrl + $(this).attr('href'));
-    }
-  });
-  relativeLinks[source] = relLinks;
-  var articles = parseArticles(relativeLinks,source);
-  console.log(articles);
+    var relLinks = [];
+    var links = $("a[href^='/']");
+    //console.log(links)
+    links.each(function(){
+        relLinks.push(source.baseUrl + $(this).attr('href'));
+    });
+    //relativeLinks[source] = relLinks;
+    //var articles = parseArticles(relativeLinks,source);
+    return relLinks;
+}
 
+function requestWrapper(link){
+    return new Promise(function(resolve, reject){
+        var body = '';
+        var req = request(link, {timeout: 10000, pool: false});
+        req.setMaxListeners(0);
+        req.on('error', function(error){
+            return reject(error);
+        });
+        req.on('response', function(res){
+            var body = '';
+            if (res.statusCode != 200){
+                err = new Error("Unexpected status code: " + res.statusCode);
+                err.res = res;
+                return reject(err);
+            }
+            res.on('data', function(chunk){
+                body += chunk;
+            });
+            res.on('end', function(){
+                resolve(body);
+            });
+        });
+    });           
 }
 
 function parseArticles(relativeLinks,source) {
-    var data = {};
-    var articles = new Array;
-    for(key in relativeLinks){
-        for (links in relativeLinks[key])
-        {
-            var link = new url_parse(relativeLinks[key][links]);
-            request(link.href, function(error, response, body) {
-                if (error){
-                    return console.log('Error:', error);
+    var articles = [];
+    const promises = relativeLinks.map(url => requestWrapper(url));
+    Promise.all(promises.map(function(promise){
+        return promise.reflect();
+    })).filter(function(promise){
+        return promise.isFulfilled();
+    }).then(function(responses){
+        responses.forEach(function(response){
+            if(response.isFulfilled()){
+                var data = extractor(response.value());
+                if(data.text != '' && data.date != null){
+                    var Article = new article(data.title, data.date, data.copyright,
+                        data.author, data.publisher, data.text, data.links, data.image);
+                    //articles.push(Article);
+                    console.log(Article)
+                    // upload the article here
                 }
-                if(response.statusCode !== 200){
-                    console.log('Invalid Status Code Returned', response.statusCode);
-                    return;
-                }
-                var data = extractor(body);
-                array.push(data);
-                var Article = new article(data.title, data.date, data.copyright, data.author, data.publisher, data.text, data.links, data.image,link.href);
-                articles.push(Article);
-            })
-        }
-    }
-    return articles;
-}
+            }
+            else { 
+                console.log("not fullfilled")
+            }
+        })
+    })
+};
+var INIT_URL = "http://www.la-razon.com/";
+start(INIT_URL);

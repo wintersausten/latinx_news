@@ -14,8 +14,9 @@ var feeds = [];
 var articles = [];
 var Promise = require("bluebird");
 
-fetch("http://estaticos.elmundo.es/elmundo/rss/portada.xml",parse);
+fetch("http://www.la-razon.com/rss/opinion/editorial/",parse);
 //fetch('http://feeds.bbci.co.uk/news/rss.xml', parse);
+
 
 function uploadArticle(articles){
   mongoose.connect('mongodb://localhost:27017/test_db');
@@ -148,8 +149,7 @@ function xmlFetch(feed, callback){
         }
     };
     xhr.send(null);
-
-}
+};
 
 function fetch(feed,callback) {
     var posts = [];
@@ -185,4 +185,7 @@ function fetch(feed,callback) {
         //console.log(posts);
         console.log("done");
     })
-}
+};
+
+module.exports.fetch = fetch;
+module.exports.parse = parse;
