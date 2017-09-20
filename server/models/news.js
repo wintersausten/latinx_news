@@ -17,7 +17,6 @@ var newsSchema = new mongoose.Schema({
   favicon: String,
   links: [],
   country: String,
-  // category: String,
 });
 
 module.exports = mongoose.model('news', newsSchema);

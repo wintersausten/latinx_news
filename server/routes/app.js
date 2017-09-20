@@ -7,9 +7,9 @@ router.post('/', (req, res) => {
   News.create({
     title: req.body.title,
     author: req.body.author,
+    publisher: req.body.publisher,
     text: req.body.text,
     country: req.body.country,
-    publisher: req.body.publisher
   }, function(err, addedArticle) {
     if (err) {
       res.status(500).json({
@@ -27,7 +27,6 @@ router.post('/', (req, res) => {
 // route to get specific article from country news page
 router.get('/country/:countryName/news/:id', (req, res) => {
   console.log(req.params.countryName);
-  // console.log(typeof req.param.countryName);
   News.findById(req.params.id, function(err, foundNews){
     if(err){
       return res.status(500).json({
@@ -42,10 +41,9 @@ router.get('/country/:countryName/news/:id', (req, res) => {
   })
 });
 
-// route to get news from specifc country
+// route to get news from specific country
 router.get('/country/:countryName', (req, res) => {
   console.log(req.params.countryName);
-  // console.log(typeof req.param.countryName);
   News.find({country: req.params.countryName.toLowerCase()}, function(err, foundNews){
     if(err){
       console.log("ERR");
@@ -85,10 +83,6 @@ router.get('/', (req, res) => {
           obj2: foundASUCD
         });
       })
-      // res.status(200).json({
-      //   message: 'Success',
-      //   obj: news
-      // });
     });
 });
 

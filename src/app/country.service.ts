@@ -21,10 +21,6 @@ export class CountryService {
     'bolivia',
     'paraguay',
     'uruguay',
-  //  'guyana',
-  //  'suriname',
-  //  'french Guiana',
- //   'falkland Islands',
   ];
 
   foundParam : boolean = false;
