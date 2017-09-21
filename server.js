@@ -4,7 +4,7 @@ var path        = require('path');
 var http        = require('http');
 var mongoose    = require('mongoose');
 var seedDB      = require('./server/seed');
-var Promise     = require('bluebird');
+
 
 var app = express();
 
@@ -18,7 +18,10 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Set up database with mongoose
-mongoose.connect('mongodb://localhost/latinx_news');
+mongoose.connect('mongodb://localhost/latinx_news', {
+	useMongoClient: true
+});
+mongoose.Promise = global.Promise;
 
 seedDB();
 
