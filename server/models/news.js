@@ -2,21 +2,16 @@ var mongoose = require('mongoose');
 
 var newsSchema = new mongoose.Schema({
   title: String,
-  softTitle: String,
   date: Date,
-  copyright: String,
-  author: [],
+  author: [String],
   publisher: String,
   text: String,
+  links: [String],
   image: String,
-  tags: [],
-  videos: [],
-  canonicalLink: String,
-  lang: String,
-  description: String,
-  favicon: String,
-  links: [],
+  source: String,
   country: String,
+},{
+  timestamps: true
 });
 
-module.exports = mongoose.model('news', newsSchema);
+module.exports = mongoose.model('News', newsSchema);

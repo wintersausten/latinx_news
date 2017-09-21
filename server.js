@@ -4,6 +4,7 @@ var path        = require('path');
 var http        = require('http');
 var mongoose    = require('mongoose');
 var seedDB      = require('./server/seed');
+var Promise     = require('bluebird');
 
 var app = express();
 
